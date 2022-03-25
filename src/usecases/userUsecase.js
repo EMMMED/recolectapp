@@ -13,7 +13,7 @@ async function createUser(data) {
        throw new createError(432,'user already exist') 
     }
     const newUser = new User(data)
-    // _id : mongoose.Schema.Types.ObjectId
+    
     
         await bcrypt.hash(newUser.user_password, saltRounds, function(err, hash) {
         newUser.user_password = hash
