@@ -3,7 +3,7 @@ business = require('../models/businessModel')
 
 
 const userSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    // _id: mongoose.Schema.Types.ObjectId,
         user_name:{
         type: String,
         match: /^[a-z0-9_-]{3,15}$/,
@@ -39,4 +39,4 @@ const userSchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model( 'user', userSchema )
+module.exports = mongoose.model('user', userSchema )
