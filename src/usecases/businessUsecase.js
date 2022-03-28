@@ -1,4 +1,3 @@
-const businessSchema = require('../models/businessModel')
 const Business = require('../models/businessModel')
 const createError = require('http-errors')
 
@@ -8,7 +7,6 @@ function probando(){
 
 function createBusiness(data) {
     const newBusiness = new Business(data)
-    user: user._id
     const error = newBusiness.validateSync()
     if(error){
         console.error(error)
@@ -17,4 +15,17 @@ function createBusiness(data) {
     return newBusiness.save()
 }
 
-module.exports = {createBusiness}
+function getBussines(){
+    return Business.find()
+}
+
+function userByBussnies(id){
+    return Business.findById(id).populate('user')
+}
+
+
+module.exports = {
+    createBusiness,
+    getBussines,
+    userByBussnies
+}

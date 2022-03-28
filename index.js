@@ -21,5 +21,5 @@ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`
 })
 
 .catch( error => {
-    console.log('DB conection Failed on http://localhost:8080 ')
+    console.log('DB conection Failed on http://localhost:3000')
 })

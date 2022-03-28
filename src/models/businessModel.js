@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 user = require('../models/userModel')
 
 const businessSchema = new mongoose.Schema({
-    user: [{type:mongoose.Schema.Types.ObjectId, ref: user}],
+    
     business_name:{
         type: String,
         required:true
@@ -27,7 +27,8 @@ const businessSchema = new mongoose.Schema({
         type: Array,
         minlength: 1,
         maxlength: 6
-    }
+    },
+    user: {type:mongoose.Schema.Types.ObjectId, ref:'user'}
 })
 
 
