@@ -1,8 +1,16 @@
 const Business = require('../models/businessModel')
+const User = require('../models/userModel')
 const createError = require('http-errors')
 
 function probando(){
     console.log('estamos probando')
+}
+
+function updateBusinessList(data, id){
+    const userId = User.findById(id)
+    const updateByUser = Business.findByIdAndUpdate(data, id)
+    
+
 }
 
 function createBusiness(data) {
