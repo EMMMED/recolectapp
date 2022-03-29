@@ -18,7 +18,7 @@ function createBusiness(data) {
     const error = newBusiness.validateSync()
     if(error){
         console.error(error)
-        throw new errorhttp(400, 'validation failed')
+        throw new createError(400, 'validation failed')
     }
     return newBusiness.save()
 }
