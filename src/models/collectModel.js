@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
+business = require('../models/businessModel')
 
 const collectSchema = new mongoose.Schema({
+    business: {type:mongoose.Schema.Types.ObjectId, ref: 'business'},
     collect_name:{
         type: String,
         match: /^[a-zA-Z]{3,20}$/,

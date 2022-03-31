@@ -35,7 +35,7 @@ router.get('/:id', async(request, response)=>{
         })
     } catch (error) {
         response.status(400)
-        response.jsonp({
+        response.json({
             ok: false,
             message: error.message
         })
