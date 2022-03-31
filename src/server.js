@@ -3,6 +3,9 @@ const router = require('./routes/businessRouter')
 const businessRouter = require('./routes/businessRouter')
 const userRouter = require('./routes/userRouter')
 const collectRouter = require('./routes/collectRouter')
+const paymentRouter = require('./routes/paymentRouter')
+const walletRouter = require('./routes/walletUserRouter')
+const wastePriceRouter = require('./routes/wastePriceRouter')
 
 const app = express()
 
@@ -11,6 +14,9 @@ app.use(express.json())
 app.use('/business', businessRouter)
 app.use('/user', userRouter)
 app.use('/collect', collectRouter)
+app.use('/payment', paymentRouter)
+app.use('/walletUser', walletRouter)
+app.use('/wastePrice', wastePriceRouter)
 
 
 app.get('/'), (request, response) => {

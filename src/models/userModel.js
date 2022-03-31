@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 business = require('../models/businessModel')
-
+payment = require('../models/paymentModel')
 
 const userSchema = new mongoose.Schema({
     // _id: mongoose.Schema.Types.ObjectId,
@@ -35,7 +35,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         reuired: false,
     },
-    business: [{type:mongoose.Schema.Types.ObjectId, ref:'business'}]
+    business: [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'business'
+    }],
+    payment: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'payment'}
 })
 
 

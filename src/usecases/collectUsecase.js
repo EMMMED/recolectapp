@@ -1,5 +1,14 @@
 const Collect = require('../models/collectModel')
+const Business =require('../models/businessModel')
 const createError = require('http-errors')
+
+function getCollects() {
+    return Collect.find()
+}
+
+function GetCollectsByBusinessId(id) {
+    return Collect.findById(id).populate({path:'business', select: 'business'})
+}
 
 function createCollect(data) {
     const newCollect = new Collect(data)
@@ -12,5 +21,7 @@ function createCollect(data) {
 }
 
 module.exports = {
-    createCollect
+    getCollects,
+    createCollect,
+    GetCollectsByBusinessId
 }

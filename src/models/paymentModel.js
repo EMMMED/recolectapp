@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
+user = require('../models/userModel')
 
 const paymentSchema = new mongoose.Schema({
+    user: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'user'
+    },
     payment_name:{
         type: String,
         match: /^[a-zA-Z]{1,35}$/,

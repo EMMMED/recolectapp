@@ -29,8 +29,14 @@ const businessSchema = new mongoose.Schema({
         minlength: 1,
         maxlength: 6
     },
-    user: {type:mongoose.Schema.Types.ObjectId, ref:'user'},
-    collect: [{type:mongoose.Schema.Types.ObjectId, ref:'collect'}]
+    user: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'user'
+    },
+    collect: [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'collect'
+    }]
 })
 
 
