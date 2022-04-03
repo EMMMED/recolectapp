@@ -5,38 +5,58 @@ const createError = require('http-errors')
 const router = express.Router()
 
 router.post('/', async(request, response) => {
-    const newBusiness = await business.createBusiness(request.body)
-    response.json({
-        status : true,
-        message: 'Business Created',
-        newBusiness: newBusiness
-    })
-})
-
-router.get('/', async(request,  response)=>{
     try {
-        const getBussines = await business.getBussines()
+        const newBusiness = await business.createBusiness(request.body)
         response.json({
-            ok: true, 
-            message: getBussines
-        })
-    } catch (error) {
-        
-    }
-})
-
-router.get('/:id', async(request, response)=>{
-    try {
-        const userByBussines = await business.userByBussnies(request.params.id)
-        response.json({
-            ok: true,
-            message: 'mostrando negocios por usuario',
-            userByBussines: userByBussines
+            status : true,
+            message: 'Business Created',
+            newBusiness: newBusiness
         })
     } catch (error) {
         response.status(400)
         response.json({
             ok: false,
+            message: error.message  
+        })
+    }
+})
+
+router.get('/', async(request,  response)=>{
+    console.log(request.query)
+    const {user} = request.query
+
+    try {
+        let getBussines 
+        if(!user){
+            getBussines = await business.getBussines()
+        } else if(!!user){
+            getBussines = await business.getBusinessByClientId(user)
+        }
+        response.json({
+            ok: true, 
+            message: getBussines
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok: false,
+            message: error.message  
+        })
+    }
+})
+
+router.get('/:id', async(request, response) => {
+    try {
+        const getBusinessById = await business.getBusinessByBusinessId(request.params.id)
+        response.json({
+            ok: true,
+            message: 'Get Business by id completed',
+            getBusinessById: getBusinessById
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok:false,
             message: error.message
         })
     }

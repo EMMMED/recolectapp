@@ -28,16 +28,34 @@ function getAllUser(){
 }
 
 function getByIdUser(id){
-    return User.findById(id)
+
+    const userFound = User.findById(id)
+    if(!userFound){
+        throw new createError(404, "User not found")
+    }
+    return userFound
 }
-    
+
+function deleteUserById(id) {
+    return User.findByIdAndDelete(id)
+}
+
+function updateUserById(id, data) {
+    return User.findByIdAndUpdate(id, data, {new:true})
+}
+
+
 function bussinesByUser(id){
     return User.findById(id).populate({ path: 'business', select: ['business_name', 'business_phone'] })
 }
+
+
 
 module.exports = {
     createUser,
     getAllUser,
     getByIdUser,
-    bussinesByUser
+    bussinesByUser,
+    deleteUserById,
+    updateUserById
 }
