@@ -62,4 +62,20 @@ router.get('/:id', async(request, response) => {
     }
 })
 
+router.patch('/:id', async( request, response ) => {
+    try {
+        const updateBusiness = await business.updateBusiness(request.params.id, request.body)
+        response.json({
+            ok: true, 
+            message: 'Business updated',
+            updateBusiness: updateBusiness
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok:false, 
+            message: error.message
+        })
+    }
+})
 module.exports = router
