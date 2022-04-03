@@ -78,4 +78,22 @@ router.patch('/:id', async( request, response ) => {
         })
     }
 })
+
+router.delete('/:id', async(request, response) => {
+    try {
+        const deleteBusinessById = await business.deleteBusiness(request.params.id)
+        response.json({
+            ok: true,
+            message: 'Business Deleted',
+            deleteBusinessById: deleteBusinessById
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok: false,
+            message: error.message
+        })
+    }
+})
+
 module.exports = router

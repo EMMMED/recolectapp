@@ -3,9 +3,6 @@ const User = require('../models/userModel')
 const createError = require('http-errors')
 
 
-function updateBusiness(id, data){
-    return Business.findByIdAndUpdate(id, data, {new:true})
-}
 
 function createBusiness(data) {
     const newBusiness = new Business(data)
@@ -35,10 +32,19 @@ function getBusinessByClientId(id){
 }
 
 
+function updateBusiness(id, data){
+    return Business.findByIdAndUpdate(id, data, {new:true})
+}
+
+function deleteBusiness(id){
+    return Business.findByIdAndDelete(id)
+}
+
 module.exports = {
     createBusiness,
     getBussines,
     getBusinessByClientId,
     getBusinessByBusinessId,
-    updateBusiness
+    updateBusiness,
+    deleteBusiness
 }
