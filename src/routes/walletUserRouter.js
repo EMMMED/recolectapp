@@ -2,40 +2,69 @@ const express = require('express')
 const WalletUser = require('../usecases/walletUserUsecase')
 const User = require('../usecases/userUsecase')
 const Business = require('../usecases/businessUsecase')
+const { request } = require('express')
+const { response } = require('express')
 
 
 const router = express.Router()
 
-router.get('/:id', async(request, response) => {
+router.get('/:id', async (request, response) => {
     try {
         const getWalletUser = await WalletUser.getWalletUser()
         response.json({
-            status: true, 
+            status: true,
             message: getWalletUser
         })
     } catch (error) {
         response.status(400)
         response.json({
-            ok:false,
+            ok: false,
             message: 'Cant get the wallet'
         })
     }
-
-    router.post('/', async(request, response) => {
-        try {
-            const newWallet = await WalletUser.createWalletUser(request.body)
-            response.json({
-                status: true,
-                message: newWallet
-            })
-        } catch (error) {
-            response.status(400)
-            response.json({
-                status: false,
-                message: 'The wallet cant be created'
-            })
-        }
-    })
 })
+
+
+router.get('/', async (request, response) => {
+    console.log(request.query)
+    const { user } = request.query
+
+    try {
+        let getWallet
+        if (!user) {
+            getWallet = await WalletUser.getAllWallets()
+        } else if (!!user) {
+            getWallet = await WalletUser.getWalletByUserIDd(user)
+        }
+        response.json({
+            ok: true,
+            message: getWallet
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok: false,
+            message: error.message
+        })
+    }
+})
+
+router.post('/', async (request, response) => {
+    try {
+        const newWallet = await WalletUser.createWalletUser(request.body)
+        response.json({
+            status: true,
+            message: newWallet
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            status: false,
+            message: 'The wallet cant be created'
+        })
+    }
+})
+
+
 
 module.exports = router

@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get('/', async(request,  response)=>{
     try {
-        const getWastePrices = await wastePrice.getWastePrices()
+        const getWastePrices = await wastePrice.getWastePrice()
         response.json({
             ok: true, 
             message: getWastePrices
@@ -16,7 +16,7 @@ router.get('/', async(request,  response)=>{
         response.status(400)
         response.json({
             ok:false,
-            message: 'Cant get the waste price list'
+            message: error.message
         })
     }
 })
@@ -50,6 +50,22 @@ router.patch('/:id', async(request, response) => {
         response.json({
             ok: false, 
             message: 'Cand update de waste price list'
+        })
+    }
+})
+
+router.delete('/:id', async( request, response) => {
+    try {
+        const deleteWastePrice = await wastePrice.deleteWastePrice(request.params.id)
+        response.json({
+            ok: true, 
+            message: 'Waste price deleted'
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok:false,
+            message: error.message
         })
     }
 })

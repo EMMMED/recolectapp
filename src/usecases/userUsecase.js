@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Business = require('../models/businessModel')
 const createError = require('http-errors')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
@@ -24,20 +25,51 @@ async function createUser(data) {
 }
 
 function getAllUser(){
+    console.log(user.business)
     return User.find()
+
 }
 
 function getByIdUser(id){
-    return User.findById(id)
+
+    const userFound = User.findById(id)
+    if(!userFound){
+        throw new createError(404, "User not found")
+    }
+    console.log(userFound.business.business_waste_typeof)
+    return userFound
 }
-    
+
+function deleteUserById(id) {
+    return User.findByIdAndDelete(id)
+}
+
+function updateUserById(id, data) {
+    return User.findByIdAndUpdate(id, data, {new:true})
+}
+
+
 function bussinesByUser(id){
     return User.findById(id).populate({ path: 'business', select: ['business_name', 'business_phone'] })
 }
+
+
 
 module.exports = {
     createUser,
     getAllUser,
     getByIdUser,
-    bussinesByUser
+    bussinesByUser,
+    deleteUserById,
+    updateUserById
 }
+
+/**
+ * SI ME TRAIGO UN USUARIO, DEBE DE TRAERSE TODOS LOS NEGOCIOS
+ * GETBUSINESSBYUSERID
+ * 
+ * SI ME TRAIGO EL NEGOCIO, DEBE DE TRAERSE LAS COLECCIONES DE ESE NEGOCIO
+ * GetCollectsByBusinnesId
+ * 
+ * 
+ */

@@ -22,21 +22,6 @@ router.post('/', async(request, response) => {
     }
 })
 
-router.get('/:id', async(request, response)=>{
-    try {
-        const bussinesByUser = await user.bussinesByUser(request.params.id)
-        response.json({
-            message: bussinesByUser
-        })
-    } catch (error) {
-        response.status(400)
-        response.json({
-            ok: false,
-            message: error.message
-        })
-    }
-})
-
 router.get('/', async(request, response)=>{
     try {
         const userAll = await user.getAllUser()
@@ -54,7 +39,24 @@ router.get('/', async(request, response)=>{
     }
 })
 
+
 router.get('/:id', async(request, response)=>{
+    try {
+        const bussinesByUser = await user.bussinesByUser(request.params.id)
+        response.json({
+            message: bussinesByUser
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok: false,
+            message: error.message
+        })
+    }
+})
+
+
+router.get('/:id', async(request, response) => {
     try {
         const getUserById = await user.getByIdUser(request.params.id)
         response.jsonp({
@@ -66,6 +68,40 @@ router.get('/:id', async(request, response)=>{
         response.status(400)
         response.json({
             ok: false,
+            message: error.message
+        })
+    }
+})
+
+router.delete('/:id', async(request, response) => {
+try {
+    const deleteUserById = await user.deleteUserById(request.params.id)
+    response.json({
+        ok:true,
+        message: 'Usuario Eliminado',
+        deleteUserById : deleteUserById
+    })
+} catch (error) {
+    response.status(400)
+    response.json({
+        ok: false,
+        message: error.message
+    })
+}
+})
+
+router.patch('/:id', async(request, response) => {
+    try {
+        const updateUser = await user.updateUserById(request.params.id, request.body)
+        response.json({
+            ok: true,
+            message: 'User updated',
+            updateUser: updateUser
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok:false, 
             message: error.message
         })
     }

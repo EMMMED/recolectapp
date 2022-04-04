@@ -5,33 +5,89 @@ const createError = require('http-errors')
 const router = express.Router()
 
 router.post('/', async(request, response) => {
-    const newBusiness = await business.createBusiness(request.body)
-    response.json({
-        status : true,
-        message: 'Business Created',
-        newBusiness: newBusiness
-    })
+    try {
+        const newBusiness = await business.createBusiness(request.body)
+
+        response.json({
+            status : true,
+            message: 'Business Created',
+            newBusiness: newBusiness
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok: false,
+            message: error.message  
+        })
+    }
 })
 
 router.get('/', async(request,  response)=>{
+    console.log()
+    console.log(request.query)
+    const {user} = request.query
+
     try {
-        const getBussines = await business.getBussines()
+        let getBussines 
+        if(!user){
+            getBussines = await business.getBussines()
+        } else if(!!user){
+            getBussines = await business.getBusinessByClientId(user)
+        }
         response.json({
             ok: true, 
             message: getBussines
         })
     } catch (error) {
-        
+        response.status(400)
+        response.json({
+            ok: false,
+            message: error.message  
+        })
     }
 })
 
-router.get('/:id', async(request, response)=>{
+router.get('/:id', async(request, response) => {
     try {
-        const userByBussines = await business.userByBussnies(request.params.id)
+        const getBusinessById = await business.getBusinessByBusinessId(request.params.id)
         response.json({
             ok: true,
-            message: 'mostrando negocios por usuario',
-            userByBussines: userByBussines
+            message: 'Get Business by id completed',
+            getBusinessById: getBusinessById
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok:false,
+            message: error.message
+        })
+    }
+})
+
+router.patch('/:id', async( request, response ) => {
+    try {
+        const updateBusiness = await business.updateBusiness(request.params.id, request.body)
+        response.json({
+            ok: true, 
+            message: 'Business updated',
+            updateBusiness: updateBusiness
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok:false, 
+            message: error.message
+        })
+    }
+})
+
+router.delete('/:id', async(request, response) => {
+    try {
+        const deleteBusinessById = await business.deleteBusiness(request.params.id)
+        response.json({
+            ok: true,
+            message: 'Business Deleted',
+            deleteBusinessById: deleteBusinessById
         })
     } catch (error) {
         response.status(400)

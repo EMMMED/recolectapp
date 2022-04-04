@@ -12,7 +12,7 @@ const paymentSchema = new mongoose.Schema({
         required:true
     },
     payment_card_number: {
-        type: Number, // Revisar tipo de dato Date, 
+        type: String, // Revisar tipo de dato Date, 
         maxlength: 19,
         minlength: 14,
         required: true
