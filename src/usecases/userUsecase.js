@@ -59,3 +59,13 @@ module.exports = {
     deleteUserById,
     updateUserById
 }
+
+/**
+ * SI ME TRAIGO UN USUARIO, DEBE DE TRAERSE TODOS LOS NEGOCIOS
+ * GETBUSINESSBYUSERID
+ * 
+ * SI ME TRAIGO EL NEGOCIO, DEBE DE TRAERSE LAS COLECCIONES DE ESE NEGOCIO
+ * GetCollectsByBusinnesId
+ * 
+ * 
+ */

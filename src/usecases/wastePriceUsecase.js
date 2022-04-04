@@ -2,15 +2,6 @@ const WastePrice = require('../models/wastePriceModel')
 const User = require('../models/userModel')
 const createError = require('http-errors')
 
-
-function getWastePrice() {
-    return WastePrice.find()
-}
-
-function updateWastePrice(id, data){
-    return WastePrice.findByIdAndUpdate(id, data) 
-}
-
 function createWastePrice(){
     const data = {
         'plastic_price': 2,
@@ -24,8 +15,21 @@ function createWastePrice(){
     return newWastePriceList.save()
 }
 
+function getWastePrice() {
+    return WastePrice.find()
+}
+
+function updateWastePrice(id, data){
+    return WastePrice.findByIdAndUpdate(id, data, {new:true}) 
+}
+
+function deleteWastePrice(id) {
+    return WastePrice.findByIdAndDelete(id)
+}
+
 module.exports = {
     getWastePrice,
     createWastePrice,
-    updateWastePrice
+    updateWastePrice,
+    deleteWastePrice
 }

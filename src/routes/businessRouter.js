@@ -7,6 +7,7 @@ const router = express.Router()
 router.post('/', async(request, response) => {
     try {
         const newBusiness = await business.createBusiness(request.body)
+
         response.json({
             status : true,
             message: 'Business Created',
@@ -22,6 +23,7 @@ router.post('/', async(request, response) => {
 })
 
 router.get('/', async(request,  response)=>{
+    console.log()
     console.log(request.query)
     const {user} = request.query
 

@@ -36,7 +36,12 @@ const businessSchema = new mongoose.Schema({
     collect: [{
         type:mongoose.Schema.Types.ObjectId,
         ref:'collect'
-    }]
+    }],
+    business_wastes_amounts: {
+        type:Object,
+        minlength:1,
+        maxlength:6
+    }
 })
 
 

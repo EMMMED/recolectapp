@@ -1,18 +1,22 @@
 const mongoose = require('mongoose')
 business = require('../models/businessModel')
 
+
 const collectSchema = new mongoose.Schema({
-    business: {type:mongoose.Schema.Types.ObjectId, ref: 'business'},
+    business: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'business'
+    },
     collect_name:{
         type: String,
         match: /^[a-zA-Z]{3,20}$/,
         required:true
     },
-    collect_date: {
-        type: String, // Revisar tipo de dato Date, 
+    collect_time: {
+        type: String,
         required: true
     },
-    collect_time: {
+    collect_date: {
         type: String, // Revisar tipo de dato Date, 
         required: true
     },
@@ -24,6 +28,15 @@ const collectSchema = new mongoose.Schema({
     collect_status: {
         type: Boolean
         // False = Incomplete , True = Completed
+    },
+    creation_date: {
+        type: String,
+        required: true
+    },
+    waste_amounts: {
+        type: Object,
+        maxlength:6,
+        minlength:1
     }
 })
 

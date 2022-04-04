@@ -4,20 +4,29 @@ const createError = require('http-errors')
 
 const router = express.Router()
 
-router.get('/' , async(request, response) => {
-    try{
-    const getAllPaymentMethods = await payment.getAllPaymentMethods()
-    response.json({
-        ok: true, 
-        message: getAllPaymentMethods
-        })
-    }catch (error) {
+router.get('/', async(request, response) => {
+    console.log(request.query)
+    const {user} = request.query
+    try {
+        let getPayments
+        if(!user){
+            getPayments = await payment.getAllPaymentMethods()
+        }else if (!!user) {
+            getPayments = await payment.getPaymentMethodByUserId(user)
+        }
         response.json({
-            ok:false,
-            message:"Get all payment methods failed"
+            ok:true,
+            message: getPayments
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok: false,
+            message: error.message
         })
     }
 })
+
 
 router.post('/', async(request, response) => {
     try{
@@ -27,9 +36,44 @@ router.post('/', async(request, response) => {
             message: newPaymentMethod
         })
     } catch ( error ){
+        response.status(400)
+        response.json({
+            ok : false,
+            message : error.message
+        })
+    }
+})
+
+router.patch( '/:id', async( request, response ) => {
+    try {
+        const paymentMethodUpdate = await payment.updatePaymentMethod(request.params.id, request.body)
+        response.json({
+            ok: true,
+            mesage: 'Payment method updated',
+            paymentMethodUpdate: paymentMethodUpdate
+        })
+    } catch (error) {
+        response.status(400)
         response.json({
             ok:false,
-            message:"Create a new payment methods fail"
+            message: error.message
+        })
+    }
+})
+
+router.delete('/:id', async(request, response) => {
+    try {
+        const paymentMethodDeleted = await payment.deletePaymentMethod(request.params.id)
+        response.json({
+            ok:true,
+            message: 'Payment method deleted',
+            paymentMethodDeleted : paymentMethodDeleted
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok:false,
+            message: error.message
         })
     }
 })

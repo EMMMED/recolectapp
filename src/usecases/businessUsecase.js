@@ -6,6 +6,18 @@ const createError = require('http-errors')
 
 function createBusiness(data) {
     const newBusiness = new Business(data)
+
+    let business_wastes_amounts  = {
+        "business_plastic": 0,
+        "business_carton": 0,
+        "business_glass": 0,
+        "business_oil": 0,
+        "business_cans": 0,
+        "business_grease": 0
+    }
+
+    newBusiness.business_wastes_amounts = business_wastes_amounts
+
     const error = newBusiness.validateSync()
     if(error){
         console.error(error)
