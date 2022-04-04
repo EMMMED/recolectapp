@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Business = require('../models/businessModel')
 const createError = require('http-errors')
 const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
@@ -24,7 +25,9 @@ async function createUser(data) {
 }
 
 function getAllUser(){
+    console.log(user.business)
     return User.find()
+
 }
 
 function getByIdUser(id){
@@ -33,6 +36,7 @@ function getByIdUser(id){
     if(!userFound){
         throw new createError(404, "User not found")
     }
+    console.log(userFound.business.business_waste_typeof)
     return userFound
 }
 

@@ -4,8 +4,19 @@ const createError = require('http-errors')
 
 
 
-function createBusiness(data) {
+
+
+async function createBusiness(data) {
+    const userFound = User.findById(data.user)
+    const userId = data.user
     const newBusiness = new Business(data)
+    const {user} = userFound
+
+    const userUpdated = userFound.business += data._id
+
+    await User.findOneAndUpdate(userId, {$set:{business: userUpdated}})
+    
+
 
     let business_wastes_amounts  = {
         "business_plastic": 0,
@@ -18,11 +29,21 @@ function createBusiness(data) {
 
     newBusiness.business_wastes_amounts = business_wastes_amounts
 
+    
+
+    
+
+    /*
+    const findUserById = await User.findByIdAndUpdate(data.user, {$set:{bussines : bussines }})
+    console.log(findUserById, 'hola')
+    */
+
     const error = newBusiness.validateSync()
     if(error){
         console.error(error)
         throw new createError(400, 'validation failed')
     }
+
     return newBusiness.save()
 }
 
