@@ -1,21 +1,12 @@
 const Business = require('../models/businessModel')
 const User = require('../models/userModel')
+const userCase = require('../usecases/userUsecase')
 const createError = require('http-errors')
-
-
-
+const { request } = require('express')
 
 
 async function createBusiness(data) {
-    const userFound = User.findById(data.user)
-    const userId = data.user
     const newBusiness = new Business(data)
-    const {user} = userFound
-
-    const userUpdated = userFound.business += data._id
-
-    await User.findOneAndUpdate(userId, {$set:{business: userUpdated}})
-    
 
 
     let business_wastes_amounts  = {
@@ -27,16 +18,7 @@ async function createBusiness(data) {
         "business_grease": 0
     }
 
-    newBusiness.business_wastes_amounts = business_wastes_amounts
-
-    
-
-    
-
-    /*
-    const findUserById = await User.findByIdAndUpdate(data.user, {$set:{bussines : bussines }})
-    console.log(findUserById, 'hola')
-    */
+    newBusiness.business_wastes_amounts = business_wastes_amounts   
 
     const error = newBusiness.validateSync()
     if(error){
@@ -44,7 +26,21 @@ async function createBusiness(data) {
         throw new createError(400, 'validation failed')
     }
 
-    return newBusiness.save()
+    // console.log(data.user);
+    // console.log(newBusiness._id.toString())
+    const businessId = newBusiness._id //TODO Optimizar codigo line 30 - 36
+    const userFound = await userCase.getByIdUser(data.user)
+    userFound.business.push(businessId)
+    // console.log(userFound.business);
+    const updateBussinesList = await User.findByIdAndUpdate(data.user, userFound)
+    newBusiness.save()
+    return (
+        updateBussinesList,
+        newBusiness
+    )
+
+    
+    // return newBusiness.save()
 }
 
 function getBussines(){
@@ -69,8 +65,20 @@ function updateBusiness(id, data){
     return Business.findByIdAndUpdate(id, data, {new:true})
 }
 
-function deleteBusiness(id){
-    return Business.findByIdAndDelete(id)
+async function deleteBusiness(id){ 
+    const businessId = id
+    const business = await Business.findById(id)
+    const userFound = await User.findById(business.user)
+    const filterbusiness = userFound.business.filter(item => item != businessId)
+
+    const newList = filterbusiness
+    const updateList = await User.findByIdAndUpdate(business.user, {business: newList})
+    const deletedBussines = await Business.findByIdAndDelete(id)
+    return (
+        deletedBussines,
+        updateList
+    )
+
 }
 
 module.exports = {

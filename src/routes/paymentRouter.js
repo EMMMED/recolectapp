@@ -2,7 +2,10 @@ const payment = require('../usecases/paymentUsecase')
 const express = require('express')
 const createError = require('http-errors')
 
+const authMiddleware = require('../middlewares/authMiddleware')
 const router = express.Router()
+
+router.use(authMiddleware)
 
 router.get('/', async(request, response) => {
     console.log(request.query)

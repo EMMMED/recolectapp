@@ -2,7 +2,11 @@ const collect = require('../usecases/collectUsecase')
 const express = require('express')
 const createError = require('http-errors')
 
+const authMiddleware = require('../middlewares/authMiddleware')
+
 const router = express.Router()
+
+router.use(authMiddleware)
 
 router.get('/', async(request,  response)=>{
     console.log(request.query)
@@ -49,13 +53,21 @@ router.get('/:id', async(request,  response)=>{
 
 
 router.post('/', async(request, response) => {
-    const newCollect = await collect.createCollect(request.body)
-    console.log(request.body.waste_amount)
-    response.json( {
-        status: true,
-        message : 'Collect Created',
-        newCollect: newCollect
-    })
+    try {
+        const newCollect = await collect.createCollect(request.body)
+        console.log(request.body.waste_amount)
+        response.json( {
+            status: true,
+            message : 'Collect Created',
+            newCollect: newCollect
+        })
+    } catch (error) {
+        response.status(400)
+        response.json({
+            ok:false,
+            message: error.message
+        })
+    }
 })
 
 router.patch('/:id', async( request, response ) => {

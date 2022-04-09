@@ -3,7 +3,11 @@ const express = require('express')
 const mongoose = require('mongoose')
 const createError = require('http-errors')
 
+const authMiddleware = require('../middlewares/authMiddleware')
+
 const router = express.Router()
+
+router.use(authMiddleware)
 
 router.post('/', async(request, response) => {
     try {
