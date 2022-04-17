@@ -1,9 +1,22 @@
 const User = require('../models/userModel')
 const Business = require('../models/businessModel')
+const Wallet = require('../usecases/walletUserUsecase')
 const createError = require('http-errors')
 const bcrypt = require('bcrypt')
-const mongoose = require('mongoose')
+const jwt = require('../lib/jwt')
 const saltRounds = 10
+
+async function login (user_mail, user_password){
+    const userFound = await User.findOne({user_mail})
+    if(!userFound) throw new createError(401, 'Invalid data')
+
+    const isValidPassword = await bcrypt.compare(user_password, userFound.user_password)
+    if(!isValidPassword) throw new createError(401, 'Invalid data')
+
+    console.log(isValidPassword)
+    //Expirar token
+    return jwt.sign({id: userFound._id})
+}
 
 async function createUser(data) {
     const userFound = await User.findOne({
@@ -14,18 +27,21 @@ async function createUser(data) {
     }
     const newUser = new User(data)
     
+    
     await bcrypt.hash(newUser.user_password, saltRounds, function(err, hash) {
         newUser.user_password = hash
         console.log(hash)
         console.log(newUser.user_password)
         return newUser.save()
     })  
-      
+
+    const newWallet = await Wallet.createWalletUser(newUser._id)
+    await User.findByIdAndUpdate(newUser._id, {walletUser : newWallet._id})
+    console.log(newWallet, 'Esto es el valor de newWallet')
     // const newUser = new User(data)
 }
 
 function getAllUser(){
-    console.log(user.business)
     return User.find()
 
 }
@@ -36,8 +52,8 @@ function getByIdUser(id){
     if(!userFound){
         throw new createError(404, "User not found")
     }
-    console.log(userFound.business.business_waste_typeof)
     return userFound
+    
 }
 
 function deleteUserById(id) {
@@ -53,15 +69,14 @@ function bussinesByUser(id){
     return User.findById(id).populate({ path: 'business', select: ['business_name', 'business_phone'] })
 }
 
-
-
 module.exports = {
     createUser,
     getAllUser,
     getByIdUser,
     bussinesByUser,
     deleteUserById,
-    updateUserById
+    updateUserById,
+    login
 }
 
 /**

@@ -2,11 +2,12 @@ const express = require('express')
 const WalletUser = require('../usecases/walletUserUsecase')
 const User = require('../usecases/userUsecase')
 const Business = require('../usecases/businessUsecase')
-const { request } = require('express')
-const { response } = require('express')
 
+const authMiddleware = require('../middlewares/authMiddleware')
 
 const router = express.Router()
+
+// router.use(authMiddleware)
 
 router.get('/:id', async (request, response) => {
     try {
@@ -51,7 +52,7 @@ router.get('/', async (request, response) => {
 
 router.post('/', async (request, response) => {
     try {
-        const newWallet = await WalletUser.createWalletUser(request.body)
+        const newWallet = await WalletUser.createWalletUser(userId)
         response.json({
             status: true,
             message: newWallet

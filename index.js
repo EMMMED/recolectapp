@@ -15,7 +15,7 @@ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`
 //mongodb+srv://Admin:<password>@recolectappapi.lowew.mongodb.net/test
 
 .then ( () => {
-    server.listen(3000, () => {
+    server.listen(8080, () => {
         console.log('Recolectapp API is ready on http://localhost:8080')
     })
 })

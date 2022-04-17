@@ -3,7 +3,10 @@ const user = require('../usecases/userUsecase')
 const express = require('express')
 const createError = require('http-errors')
 
+const authMiddleware = require('../middlewares/authMiddleware')
 const router = express.Router()
+
+router.use(authMiddleware)
 
 router.get('/', async(request,  response)=>{
     try {
