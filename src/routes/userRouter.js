@@ -4,9 +4,11 @@ const mongoose = require('mongoose')
 const createError = require('http-errors')
 
 const authMiddleware = require('../middlewares/authMiddleware')
+const loggerMiddleware = require('../middlewares/loggerMiddleware')
 
 const router = express.Router()
 
+router.use(loggerMiddleware)
 // router.use(authMiddleware)
 
 router.post('/', async(request, response) => {
@@ -29,7 +31,7 @@ router.post('/', async(request, response) => {
 router.get('/', async(request, response)=>{
     try {
         const userAll = await user.getAllUser()
-        console.log(userAll)
+        
         response.json({
             ok: true,
             message: 'Mostrando todos los usuarios',

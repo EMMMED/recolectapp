@@ -16,8 +16,9 @@ router.post('/login', async(request, response)=> {
         const {token, id} = data
         console.log(token);
         response.json({
-            ok:true,
-            message: token , id
+            ok:true, 
+            message: 'Get data',
+            user: token , id
         })
     } catch (error) {
         response.status(error.status, 500)
