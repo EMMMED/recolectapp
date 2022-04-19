@@ -12,11 +12,12 @@ router.post('/login', async(request, response)=> {
         if(!user_mail) throw new createError(400, 'Email is required')
         if(!user_password) throw new createError(400, 'Password is required')
 
-        const token = await User.login(user_mail, user_password)
+        const data = await User.login(user_mail, user_password)
+        const {token, id} = data
         console.log(token);
         response.json({
             ok:true,
-            message: token
+            message: token , id
         })
     } catch (error) {
         response.status(error.status, 500)

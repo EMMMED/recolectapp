@@ -1,5 +1,5 @@
 const express = require('express')
-
+const cors = require('cors')
 
 const businessRouter = require('./routes/businessRouter')
 const userRouter = require('./routes/userRouter')
@@ -11,7 +11,7 @@ const authRouter = require('./routes/authRouter')
 
 
 const app = express()
-
+app.use(cors())
 app.use(express.json())
 
 app.use('/business', businessRouter)

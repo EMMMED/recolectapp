@@ -14,7 +14,10 @@ async function login (user_mail, user_password){
 
     console.log(isValidPassword)
     //Expirar token
-    return jwt.sign({id: userFound._id})
+    return {
+        token: jwt.sign({id: userFound._id}),
+        id: userFound._id
+    }
 }
 
 async function createUser(data) {
