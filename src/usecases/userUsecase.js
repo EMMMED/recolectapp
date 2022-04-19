@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const Business = require('../models/businessModel')
+const Wallet = require('../usecases/walletUserUsecase')
 const createError = require('http-errors')
 const bcrypt = require('bcrypt')
 const jwt = require('../lib/jwt')
@@ -29,13 +30,17 @@ async function createUser(data) {
     }
     const newUser = new User(data)
     
+    
     await bcrypt.hash(newUser.user_password, saltRounds, function(err, hash) {
         newUser.user_password = hash
         console.log(hash)
         console.log(newUser.user_password)
         return newUser.save()
     })  
-      
+
+    const newWallet = await Wallet.createWalletUser(newUser._id)
+    await User.findByIdAndUpdate(newUser._id, {walletUser : newWallet._id})
+    console.log(newWallet, 'Esto es el valor de newWallet')
     // const newUser = new User(data)
 }
 

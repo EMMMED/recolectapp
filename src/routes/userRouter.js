@@ -29,6 +29,7 @@ router.post('/', async(request, response) => {
 router.get('/', async(request, response)=>{
     try {
         const userAll = await user.getAllUser()
+        console.log(userAll)
         response.json({
             ok: true,
             message: 'Mostrando todos los usuarios',
@@ -94,7 +95,7 @@ try {
 }
 })
 
-router.patch('/:id', async(request, response) => {
+router.patch('/:id', authMiddleware, async(request, response) => {
     try {
         const updateUser = await user.updateUserById(request.params.id, request.body)
         response.json({
