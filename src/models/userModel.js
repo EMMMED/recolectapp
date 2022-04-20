@@ -6,7 +6,7 @@ walletUser = require('../models/walletUserModel')
 const userSchema = new mongoose.Schema({
     user_name:{
         type: String,
-        match: /^[a-z0-9_-]{3,15}$/,
+        // match: /^[a-z0-9_-]{3,15}$/,
         required:true
     },
     user_mail: {
