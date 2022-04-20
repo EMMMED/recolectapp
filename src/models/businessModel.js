@@ -15,8 +15,7 @@ const businessSchema = new mongoose.Schema({
     business_phone: {
         type: Number,
         required: true, 
-        minlength: 10,
-        maxlength: 10
+      
     },
     business_typeof: {
         type: String,
@@ -26,8 +25,7 @@ const businessSchema = new mongoose.Schema({
     },
     business_waste_typeof: {
         type: Array,
-        minlength: 1,
-        maxlength: 6
+       
     },
     user: {
         type:mongoose.Schema.Types.ObjectId,
@@ -39,8 +37,7 @@ const businessSchema = new mongoose.Schema({
     }],
     business_wastes_amounts: {
         type:Object,
-        minlength:1,
-        maxlength:6
+        
     }
 })
 

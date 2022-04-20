@@ -10,6 +10,7 @@ router.use(authMiddleware)
 
 router.post('/', async(request, response) => {
     try {
+        console.log("este es el request",request.body)
         const newBusiness = await business.createBusiness(request.body)
 
         response.json({

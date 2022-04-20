@@ -8,7 +8,7 @@ const { request } = require('express')
 async function createBusiness(data) {
     const newBusiness = new Business(data)
 
-
+    console.log("esta es la data", data)
     let business_wastes_amounts  = {
         "business_plastic": 0,
         "business_carton": 0,
@@ -23,7 +23,7 @@ async function createBusiness(data) {
     const error = newBusiness.validateSync()
     if(error){
         console.error(error)
-        throw new createError(400, 'validation failed')
+        throw new createError(400, error)
     }
 
     // console.log(data.user);
