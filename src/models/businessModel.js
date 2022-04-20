@@ -15,7 +15,6 @@ const businessSchema = new mongoose.Schema({
     business_phone: {
         type: Number,
         required: true, 
-      
     },
     business_typeof: {
         type: String,
