@@ -4,11 +4,11 @@ const mongoose = require('mongoose')
 const createError = require('http-errors')
 
 const authMiddleware = require('../middlewares/authMiddleware')
-const loggerMiddleware = require('../middlewares/loggerMiddleware')
+// const loggerMiddleware = require('../middlewares/loggerMiddleware')
 
 const router = express.Router()
 
-router.use(loggerMiddleware)
+// router.use(loggerMiddleware)
 // router.use(authMiddleware)
 
 router.post('/', async(request, response) => {
@@ -51,7 +51,8 @@ router.get('/:id', async(request, response)=>{
     try {
         const bussinesByUser = await user.bussinesByUser(request.params.id)
         response.json({
-            message: bussinesByUser
+            message: 'Get bussines by user',
+            bussinesByUser: bussinesByUser
         })
     } catch (error) {
         response.status(400)
@@ -68,7 +69,7 @@ router.get('/:id', async(request, response) => {
         const getUserById = await user.getByIdUser(request.params.id)
         response.jsonp({
             ok: true,
-            message: 'Mostrando usuario',
+            message: 'Get user By Id',
             userById: getUserById
         })
     } catch (error) {
@@ -85,7 +86,7 @@ try {
     const deleteUserById = await user.deleteUserById(request.params.id)
     response.json({
         ok:true,
-        message: 'Usuario Eliminado',
+        message: 'Deleted user',
         deleteUserById : deleteUserById
     })
 } catch (error) {

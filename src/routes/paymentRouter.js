@@ -19,7 +19,8 @@ router.get('/', async(request, response) => {
         }
         response.json({
             ok:true,
-            message: getPayments
+            message: 'Get payments',
+            getPayments: getPayments
         })
     } catch (error) {
         response.status(400)
@@ -36,7 +37,8 @@ router.post('/', async(request, response) => {
         const newPaymentMethod = await payment.createPaymentMethod(request.body)
         response.json({ 
             status: true, 
-            message: newPaymentMethod
+            message: 'Created Payment',
+            newPaymentMethod: newPaymentMethod
         })
     } catch ( error ){
         response.status(400)

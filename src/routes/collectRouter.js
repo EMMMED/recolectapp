@@ -21,7 +21,8 @@ router.get('/', async(request,  response)=>{
         }
         response.json({
             ok: true, 
-            message: getCollect
+            message: 'Get Collect by Bussines',
+            getCollect: getCollect
         })
     } catch (error) {
         response.status(400)
