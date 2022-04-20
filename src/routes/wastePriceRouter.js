@@ -13,7 +13,8 @@ router.get('/', async(request,  response)=>{
         const getWastePrices = await wastePrice.getWastePrice()
         response.json({
             ok: true, 
-            message: getWastePrices
+            message: 'get wastes',
+            getWastePrices: getWastePrices
         })
     } catch (error) {
         response.status(400)
@@ -29,13 +30,14 @@ router.post('/', async(request, response) => {
         const newWastePriceList = await wastePrice.createWastePrice()
         response.json({
             ok:true, 
-            message: newWastePriceList
+            message: 'Created waste',
+            newWastePriceList:  newWastePriceList
         })
     } catch (error) {
         response.status(400)
         response.json({
             ok: false, 
-            message: 'Cant create a new waste price list'
+            message: error.message
         })
         
     }
@@ -46,13 +48,14 @@ router.patch('/:id', async(request, response) => {
         const updatePriceList = await wastePrice.updateWastePrice(request.params.id, request.body)
         response.json({
             ok: true, 
-            message: updatePriceList
+            message: 'Updated waste',
+            updatePriceList: updatePriceList
         })
     } catch (error) {
         response.status(400),
         response.json({
             ok: false, 
-            message: 'Cand update de waste price list'
+            message: error.message
         })
     }
 })
@@ -62,7 +65,8 @@ router.delete('/:id', async( request, response) => {
         const deleteWastePrice = await wastePrice.deleteWastePrice(request.params.id)
         response.json({
             ok: true, 
-            message: 'Waste price deleted'
+            message: 'Waste price deleted',
+            deleteWastePrice: deleteWastePrice
         })
     } catch (error) {
         response.status(400)

@@ -14,13 +14,14 @@ router.get('/:id', async (request, response) => {
         const getWalletUser = await WalletUser.getWalletUser()
         response.json({
             status: true,
-            message: getWalletUser
+            message: 'get Wallet',
+            getWalletUser: getWalletUser
         })
     } catch (error) {
         response.status(400)
         response.json({
             ok: false,
-            message: 'Cant get the wallet'
+            message:error.message
         })
     }
 })
@@ -39,7 +40,8 @@ router.get('/', async (request, response) => {
         }
         response.json({
             ok: true,
-            message: getWallet
+            message: 'get Wallet by user',
+            getWallet: getWallet
         })
     } catch (error) {
         response.status(400)
@@ -55,13 +57,14 @@ router.post('/', async (request, response) => {
         const newWallet = await WalletUser.createWalletUser(userId)
         response.json({
             status: true,
-            message: newWallet
+            message: 'Created wallrt',
+            newWallet: newWallet
         })
     } catch (error) {
         response.status(400)
         response.json({
             status: false,
-            message: 'The wallet cant be created'
+            message: error.message
         })
     }
 })

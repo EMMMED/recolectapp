@@ -41,7 +41,8 @@ router.get('/', async(request,  response)=>{
         }
         response.json({
             ok: true, 
-            message: getBussines
+            message: 'Get Bussines By user',
+            getBussines: getBussines
         })
     } catch (error) {
         response.status(400)

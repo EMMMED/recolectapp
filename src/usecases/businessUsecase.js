@@ -28,7 +28,7 @@ async function createBusiness(data) {
 
     // console.log(data.user);
     // console.log(newBusiness._id.toString())
-    const businessId = newBusiness._id //TODO Optimizar codigo line 30 - 36
+    const businessId = newBusiness._id 
     const userFound = await userCase.getByIdUser(data.user)
     userFound.business.push(businessId)
     // console.log(userFound.business);
