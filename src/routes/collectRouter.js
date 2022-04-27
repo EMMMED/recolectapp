@@ -56,7 +56,6 @@ router.get('/:id', async(request,  response)=>{
 router.post('/', async(request, response) => {
     try {
         const newCollect = await collect.createCollect(request.body)
-        console.log(request.body.waste_amount)
         response.json( {
             status: true,
             message : 'Collect Created',

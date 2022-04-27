@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Api Recolectapp",
   "main": "index.js",
+  "engines": {
+    "node": "12.*",
+    "npm":"8.*"
+  },
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",

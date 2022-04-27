@@ -22,7 +22,7 @@ const businessSchema = new mongoose.Schema({
         minlength: 1,
         maxlength: 20
     },
-    business_waste_typeof: {
+    waste_typeof: {
         type: Array,
        
     },

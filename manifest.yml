@@ -1,0 +1,5 @@
+applications:
+ - name: RecolectAppi
+   random-route: true
+   memory: 64M
+   buildpack: nodejs_buildpack
