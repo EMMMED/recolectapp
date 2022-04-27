@@ -2,7 +2,6 @@ const Business = require('../models/businessModel')
 const User = require('../models/userModel')
 const userCase = require('../usecases/userUsecase')
 const createError = require('http-errors')
-const { request } = require('express')
 
 
 async function createBusiness(data) {
