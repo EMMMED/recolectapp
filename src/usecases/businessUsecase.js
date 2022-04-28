@@ -25,7 +25,7 @@ async function createBusiness(data) {
         throw new createError(400, error)
     }
 
-    // console.log(data.user);
+    console.log(data.user);
     // console.log(newBusiness._id.toString())
     const businessId = newBusiness._id 
     const userFound = await userCase.getByIdUser(data.user)
