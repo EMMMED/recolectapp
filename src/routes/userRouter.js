@@ -1,7 +1,5 @@
 const user = require('../usecases/userUsecase')
 const express = require('express')
-const mongoose = require('mongoose')
-const createError = require('http-errors')
 
 const authMiddleware = require('../middlewares/authMiddleware')
 // const loggerMiddleware = require('../middlewares/loggerMiddleware')
@@ -14,10 +12,12 @@ const router = express.Router()
 router.post('/', async(request, response) => {
     try {
         const newUSer = await user.createUser(request.body)
+        const userToken = await user.login(request.body.user_mail, request.body.user_password)
         response.json({
             status: true,
             message: 'User Created',
-            newUser: newUSer
+            newUser: newUSer, 
+            userToken
         })
     } catch (error) {
         response.status(400)
