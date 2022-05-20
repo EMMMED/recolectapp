@@ -16,7 +16,7 @@ function getAllWallets(){
     return WalletUser.find()
 }
 
-function getWalletByUserIDd(id){
+function getWalletByUserID(id){
     return WalletUser.find({user:id})
 }
 
@@ -31,7 +31,7 @@ function deleteWalletUser(id) {
 module.exports = {
     getAllWallets,
     getWalletUser,
-    getWalletByUserIDd,
+    getWalletByUserID,
     createWalletUser,
     updateWalletUser,
     deleteWalletUser

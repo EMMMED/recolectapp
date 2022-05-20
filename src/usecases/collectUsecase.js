@@ -1,9 +1,10 @@
 const Collect = require('../models/collectModel')
 const Business =require('../models/businessModel')
+const bussinesCase = require('../usecases/businessUsecase')
 const createError = require('http-errors')
 
 
-function createCollect(data) {
+async function createCollect(data) {
     const date = new Date()
     const nowDate = date.toLocaleString()
     //Sun Apr 03 2022 A toDateString
@@ -21,8 +22,17 @@ function createCollect(data) {
     }
 
     newCollect.waste_amounts = waste_amounts
+    newCollect.save()
 
-    return newCollect.save()
+    const bussinesFound = await bussinesCase.getBusinessByBusinessId(newCollect.business)
+
+    bussinesFound.collect.push(newCollect._id)
+    const updateListCollect = await Business.findByIdAndUpdate(newCollect.business, bussinesFound)
+
+    return (
+        newCollect,
+        updateListCollect
+    )
 }
 
 function getCollects() {

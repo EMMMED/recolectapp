@@ -26,11 +26,9 @@ async function createBusiness(data) {
     }
 
     console.log(data.user);
-    // console.log(newBusiness._id.toString())
     const businessId = newBusiness._id 
     const userFound = await userCase.getByIdUser(data.user)
     userFound.business.push(businessId)
-    // console.log(userFound.business);
     const updateBussinesList = await User.findByIdAndUpdate(data.user, userFound)
     newBusiness.save()
     return (
@@ -38,8 +36,6 @@ async function createBusiness(data) {
         newBusiness
     )
 
-    
-    // return newBusiness.save()
 }
 
 function getBussines(){
@@ -67,16 +63,20 @@ function updateBusiness(id, data){
 async function deleteBusiness(id){ 
     const businessId = id
     const business = await Business.findById(id)
+
     const userFound = await User.findById(business.user)
     const filterbusiness = userFound.business.filter(item => item != businessId)
 
     const newList = filterbusiness
     const updateList = await User.findByIdAndUpdate(business.user, {business: newList})
     const deletedBussines = await Business.findByIdAndDelete(id)
-    return (
-        deletedBussines,
-        updateList
-    )
+
+    console.log(deletedBussines)
+    console.log(updateList);
+    // return (
+    //     deletedBussines,
+    //     updateList
+    // )
 
 }
 

@@ -14,7 +14,7 @@ router.post('/login', async(request, response)=> {
 
         const data = await User.login(user_mail, user_password)
         const {token, id} = data
-        console.log(token);
+        console.log(`${id}: ${token}`);
         response.json({
             ok:true, 
             message: 'Get data',

@@ -36,7 +36,7 @@ router.get('/', async (request, response) => {
         if (!user) {
             getWallet = await WalletUser.getAllWallets()
         } else if (!!user) {
-            getWallet = await WalletUser.getWalletByUserIDd(user)
+            getWallet = await WalletUser.getWalletByUserID(user)
         }
         response.json({
             ok: true,

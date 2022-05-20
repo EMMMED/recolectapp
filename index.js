@@ -7,7 +7,6 @@ const {
     DB_PASSWORD,
     DB_HOST, 
     DB_NAME,
-    JWT_SECRET
 } = process.env
 
 
