@@ -26,7 +26,8 @@ const collectSchema = new mongoose.Schema({
         maxlength: 6
     },
     collect_status: {
-        type: Boolean
+        type: Boolean,
+        default: false
         // False = Incomplete , True = Completed
     },
     creation_date: {

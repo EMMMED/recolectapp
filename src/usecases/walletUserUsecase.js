@@ -1,6 +1,4 @@
 const WalletUser = require('../models/walletUserModel')
-const Business = require('../models/businessModel')
-const User = require('../models/userModel')
 
 function createWalletUser(idUser) {
     const newWallet = new WalletUser({user : idUser})
