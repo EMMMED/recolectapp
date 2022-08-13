@@ -1,8 +1,6 @@
 const Collect = require('../models/collectModel')
 const Business =require('../models/businessModel')
 const bussinesCase = require('../usecases/businessUsecase')
-const createError = require('http-errors')
-
 
 async function createCollect(data) {
     const date = new Date()
@@ -81,10 +79,7 @@ async function updateCollect (idCollect,  data) {
     
     const findByBusiness = await Business.findByIdAndUpdate(businessId, {$set:{business_wastes_amounts: business_wastes_amounts
     }})
-    console.log(findByBusiness)
 
-
-    console.log(businessFound)
     // business.findByIdAndUpdate(idBusiness, data)
     return Collect.findByIdAndUpdate(idCollect, data, {new:true})
 }

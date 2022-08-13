@@ -8,6 +8,7 @@ const paymentRouter = require('./routes/paymentRouter')
 const walletRouter = require('./routes/walletUserRouter')
 const wastePriceRouter = require('./routes/wastePriceRouter')
 const authRouter = require('./routes/authRouter')
+const newsletterRouter = require('./routes/newsletterRouter')
 
 
 const app = express()
@@ -21,7 +22,7 @@ app.use('/payment', paymentRouter)
 app.use('/walletUser', walletRouter)
 app.use('/wastePrice', wastePriceRouter)
 app.use('/auth', authRouter)
-
+app.use('/newsletter', newsletterRouter)
 
 
 app.get('/'), (request, response) => {

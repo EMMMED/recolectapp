@@ -1,5 +1,4 @@
 const User = require('../models/userModel')
-const Business = require('../models/businessModel')
 const Wallet = require('../usecases/walletUserUsecase')
 const createError = require('http-errors')
 const bcrypt = require('bcrypt')

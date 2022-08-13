@@ -16,6 +16,7 @@ async function createBusiness(data) {
         "business_cans": 0,
         "business_grease": 0
     }
+    
 
     newBusiness.business_wastes_amounts = business_wastes_amounts   
 
@@ -65,18 +66,22 @@ async function deleteBusiness(id){
     const business = await Business.findById(id)
 
     const userFound = await User.findById(business.user)
+    
+    if (business.collect.length>1) {
+        throw new createError(400)
+    }
     const filterbusiness = userFound.business.filter(item => item != businessId)
-
     const newList = filterbusiness
-    const updateList = await User.findByIdAndUpdate(business.user, {business: newList})
-    const deletedBussines = await Business.findByIdAndDelete(id)
 
-    console.log(deletedBussines)
-    console.log(updateList);
-    // return (
-    //     deletedBussines,
-    //     updateList
-    // )
+    const updateList = User.findByIdAndUpdate(business.user, {business: newList})
+    const deletedBussines = Business.findByIdAndDelete(id)
+    
+    //console.log(deletedBussines)
+    //console.log(updateList);
+    return (
+        deletedBussines,
+        updateList
+    )
 
 }
 

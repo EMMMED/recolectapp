@@ -57,7 +57,7 @@ router.post('/', async (request, response) => {
         const newWallet = await WalletUser.createWalletUser(userId)
         response.json({
             status: true,
-            message: 'Created wallrt',
+            message: 'Created wallet',
             newWallet: newWallet
         })
     } catch (error) {
