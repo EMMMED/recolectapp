@@ -4,7 +4,7 @@ const {
     urlApi
 } = process.env
 
-async function getnewsletterAll(){
+const getnewsletterAll = async()=>{
     const response = await Fetch(`${urlApi}/newsletter`)
     const data = await response.json()
     return data
