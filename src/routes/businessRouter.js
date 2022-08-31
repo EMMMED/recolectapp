@@ -10,7 +10,6 @@ router.use(authMiddleware)
 
 router.post('/', async(request, response) => {
     try {
-        console.log("este es el request",request.body)
         const newBusiness = await business.createBusiness(request.body)
 
         response.json({
@@ -90,16 +89,6 @@ router.patch('/:id', async( request, response ) => {
 router.delete('/:id', async(request, response) => {
     try {
         const deleteBusinessById = await business.deleteBusiness(request.params.id)
-        if (!deleteBusinessById) {
-            response.status(400)
-            response.json({
-                ok:false,
-                message:'Hay historial de recolecciones y no puedes eliminar el negocio',
-                deleteBusinessById: deleteBusinessById
-            })
-            return;
-        }
-
         response.json({
             ok: true,
             message: 'Business Deleted',

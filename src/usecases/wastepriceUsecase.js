@@ -1,8 +1,6 @@
 require('dotenv').config()
 const Fetch = require('cross-fetch')
-const {
-    urlApi
-} = process.env
+const {urlApi} = process.env
 
 const getwastepriceAll = async() =>{
     const response = await Fetch(`${urlApi}/wasteprice`)

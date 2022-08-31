@@ -62,27 +62,20 @@ function updateBusiness(id, data){
 }
 
 async function deleteBusiness(id){ 
-    const businessId = id
-    const business = await Business.findById(id)
-
-    const userFound = await User.findById(business.user)
+    const bussines = await getBusinessByBusinessId(id)
+    const userFound = await User.findById(bussines.user)
     
-    if (business.collect.length>1) {
-        throw new createError(400)
-    }
-    const filterbusiness = userFound.business.filter(item => item != businessId)
-    const newList = filterbusiness
+    if (bussines.collect.length > 0) throw new createError(400)
 
-    const updateList = User.findByIdAndUpdate(business.user, {business: newList})
-    const deletedBussines = Business.findByIdAndDelete(id)
+    const newList = userFound.business.filter(item => item != id)
+
+    const updateBussines = await User.findByIdAndUpdate(bussines.user , {business: newList})
+    const deleteBussines = Business.findByIdAndDelete(id)
     
-    //console.log(deletedBussines)
-    //console.log(updateList);
-    return (
-        deletedBussines,
-        updateList
+    return(
+        updateBussines,
+        deleteBussines
     )
-
 }
 
 module.exports = {
