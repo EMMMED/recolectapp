@@ -2,7 +2,6 @@ const WalletUser = require('../models/walletUserModel')
 
 function createWalletUser(idUser) {
     const newWallet = new WalletUser({user : idUser})
-    console.log(newWallet)
     return newWallet.save()
 }
 
@@ -17,6 +16,7 @@ function getAllWallets(){
 function getWalletByUserID(id){
     return WalletUser.find({user:id})
 }
+
 
 function updateWalletUser(id, data) {
     return WalletUser.findByIdAndUpdate(id, data, {new:true})

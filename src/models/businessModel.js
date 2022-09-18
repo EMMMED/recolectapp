@@ -36,7 +36,6 @@ const businessSchema = new mongoose.Schema({
     }],
     business_wastes_amounts: {
         type:Object,
-        
     }
 })
 

@@ -1,88 +1,86 @@
-const Business = require('../models/businessModel')
-const User = require('../models/userModel')
-const userCase = require('../usecases/userUsecase')
-const createError = require('http-errors')
+const Business = require("../models/businessModel")
+const user = require("../usecases/userUsecase")
+const createError = require("http-errors")
 
+let business_wastes_amounts = {
+  business_plastic: 0,
+  business_carton: 0,
+  business_glass: 0,
+  business_oil: 0,
+  business_cans: 0,
+  business_grease: 0,
+}
 
 async function createBusiness(data) {
-    const newBusiness = new Business(data)
+  const newBusiness = new Business(data)
+  newBusiness.business_wastes_amounts = business_wastes_amounts
 
-    console.log("esta es la data", data)
-    let business_wastes_amounts  = {
-        "business_plastic": 0,
-        "business_carton": 0,
-        "business_glass": 0,
-        "business_oil": 0,
-        "business_cans": 0,
-        "business_grease": 0
-    }
-    
+  const error = newBusiness.validateSync()
+  if (error) {
+    throw new createError(400, error)
+  }
 
-    newBusiness.business_wastes_amounts = business_wastes_amounts   
-
-    const error = newBusiness.validateSync()
-    if(error){
-        console.error(error)
-        throw new createError(400, error)
-    }
-
-    console.log(data.user);
-    const businessId = newBusiness._id 
-    const userFound = await userCase.getByIdUser(data.user)
-    userFound.business.push(businessId)
-    const updateBussinesList = await User.findByIdAndUpdate(data.user, userFound)
-    newBusiness.save()
-    return (
-        updateBussinesList,
-        newBusiness
-    )
-
+  const userFound = await user.getByIdUser(data.user)
+  userFound.business.push(newBusiness._id)
+  await user.updateUserById(data.user, userFound)
+  newBusiness.save()
+  return newBusiness
 }
 
-function getBussines(){
-    return Business.find()
+function getBussines() {
+  return Business.find()
 }
 
-function getBusinessByBusinessId(id){
-    const businessFound = Business.findById(id)
-    if(!businessFound){
-        throw new createError(404, 'Cant get business by Id')
-    }
-    return businessFound
+function getBusinessByBusinessId(id) {
+  const businessFound = Business.findById(id)
+  if (!businessFound) {
+    throw new createError(404, "Ningun resultado")
+  }
+  return businessFound
 }
 
-function getBusinessByClientId(id){
-    console.log(id)
-    return Business.find({user:id})
+async function getBusinessByClientId(id) {
+  const userFound = await user.getByIdUser(id)
+  sumaTotalwaste(userFound.business)
+  return Business.find({ user: id })
+}
+
+function updateBusiness(id, data) {
+  return Business.findByIdAndUpdate(id, data, { new: true })
+}
+
+async function deleteBusiness(id) {
+  const bussines = await getBusinessByBusinessId(id)
+  const userFound = await user.getByIdUser(bussines.user)
+
+  if (bussines.collect.length > 0) throw new createError(400)
+
+  const newList = userFound.business.filter((item) => item != id)
+  await user.updateUserById(bussines.user, { business: newList })
+  const deleteBussines = Business.findByIdAndDelete(id)
+
+  return deleteBussines
 }
 
 
-function updateBusiness(id, data){
-    return Business.findByIdAndUpdate(id, data, {new:true})
-}
 
-async function deleteBusiness(id){ 
-    const bussines = await getBusinessByBusinessId(id)
-    const userFound = await User.findById(bussines.user)
-    
-    if (bussines.collect.length > 0) throw new createError(400)
-
-    const newList = userFound.business.filter(item => item != id)
-
-    const updateBussines = await User.findByIdAndUpdate(bussines.user , {business: newList})
-    const deleteBussines = Business.findByIdAndDelete(id)
-    
-    return(
-        updateBussines,
-        deleteBussines
-    )
+function sumaTotalwaste(business){
+  const businessList = Object.values(business).map(item => {
+    console.log(item);
+    return item
+  })
+  // const amounts = businessList.map(business => (
+  //   businessFound = getBusinessByBusinessId(business)
+  // ))
+  console.log(businessList)
+  return businessList
 }
 
 module.exports = {
-    createBusiness,
-    getBussines,
-    getBusinessByClientId,
-    getBusinessByBusinessId,
-    updateBusiness,
-    deleteBusiness
+  createBusiness,
+  getBussines,
+  getBusinessByClientId,
+  getBusinessByBusinessId,
+  updateBusiness,
+  deleteBusiness,
 }

@@ -8,8 +8,7 @@ const collectSchema = new mongoose.Schema({
         ref: 'business'
     },
     collect_name:{
-        type: String,
-        
+        type: String, 
         required:true
     },
     collect_time: {
@@ -30,15 +29,14 @@ const collectSchema = new mongoose.Schema({
         default: false
         // False = Incomplete , True = Completed
     },
-    creation_date: {
-        type: String,
-        required: true
-    },
     waste_amounts: {
         type: Object,
         maxlength:6,
         minlength:1
     }
+},
+{
+    timestamps: true
 })
 
 
