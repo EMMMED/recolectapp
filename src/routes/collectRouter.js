@@ -18,11 +18,11 @@ router.get("/", async (request, response) => {
       message = 'Mostrando recolecciones'
     } else if (!!business) {
       getCollect = await collect.getCollectByBusinessId(business)
-      message = ''
+      message = 'Recolecciones por negocio'
     }
     response.json({
       ok: true,
-      message: "Get Collect by Bussines",
+      message: message,
       getCollect: getCollect,
     });
   } catch (error) {
@@ -40,7 +40,7 @@ router.get("/:id", async (request, response) => {
     console.log(collect.waste_amount);
     response.json({
       ok: true,
-      message: "get collects by id",
+      message: "Recolecciones por id",
       getCollectById: getCollectById,
     });
   } catch (error) {
@@ -57,7 +57,7 @@ router.post("/", async (request, response) => {
     const newCollect = await collect.createCollect(request.body);
     response.json({
       status: true,
-      message: "Collect Created",
+      message: "Nueva Recoleccion",
       newCollect: newCollect,
     });
   } catch (error) {
@@ -76,7 +76,7 @@ router.delete("/:id", async (request, response) => {
     );
     response.json({
       ok: true,
-      message: "Collect Deleted",
+      message: "Recoleccion eliminada",
       deleteCollectById: deleteCollectById,
     });
   } catch (error) {

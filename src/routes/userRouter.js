@@ -2,12 +2,7 @@ const user = require("../usecases/userUsecase");
 const express = require("express");
 
 const authMiddleware = require("../middlewares/authMiddleware");
-// const loggerMiddleware = require('../middlewares/loggerMiddleware')
-
 const router = express.Router();
-
-// router.use(loggerMiddleware)
-// router.use(authMiddleware)
 
 router.post("/", async (request, response) => {
   try {

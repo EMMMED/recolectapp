@@ -1,6 +1,5 @@
 const business = require("../usecases/businessUsecase");
 const express = require("express");
-const createError = require("http-errors");
 
 const authMiddleware = require("../middlewares/authMiddleware");
 

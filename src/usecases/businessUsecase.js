@@ -2,18 +2,9 @@ const Business = require("../models/businessModel")
 const user = require("../usecases/userUsecase")
 const createError = require("http-errors")
 
-let business_wastes_amounts = {
-  business_plastic: 0,
-  business_carton: 0,
-  business_glass: 0,
-  business_oil: 0,
-  business_cans: 0,
-  business_grease: 0,
-}
 
 async function createBusiness(data) {
   const newBusiness = new Business(data)
-  newBusiness.business_wastes_amounts = business_wastes_amounts
 
   const error = newBusiness.validateSync()
   if (error) {
@@ -62,19 +53,6 @@ async function deleteBusiness(id) {
   return deleteBussines
 }
 
-
-
-function sumaTotalwaste(business){
-  const businessList = Object.values(business).map(item => {
-    console.log(item);
-    return item
-  })
-  // const amounts = businessList.map(business => (
-  //   businessFound = getBusinessByBusinessId(business)
-  // ))
-  console.log(businessList)
-  return businessList
-}
 
 module.exports = {
   createBusiness,

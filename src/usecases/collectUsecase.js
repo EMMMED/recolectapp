@@ -1,6 +1,6 @@
 const Collect = require("../models/collectModel");
-const Business = require("../models/businessModel");
 const bussines = require("../usecases/businessUsecase");
+const createHttpError = require("http-errors");
 
 const waste_amounts = {
   plastic_amount: 0,
@@ -36,7 +36,11 @@ function getCollectByBusinessId(id) {
 }
 
 
-function deleteCollectById(id) {
+async function deleteCollectById(id) {
+  const collect = await getCollectById(id)
+  if (collect.collec_status === true) {
+    throw new createHttpError(400, 'No se puede eliminar')
+  }
   return Collect.findByIdAndDelete(id)
 }
 
