@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
-Business = require('../models/businessModel')
+business = require('../models/businessModel')
 
 
 const collectSchema = new mongoose.Schema({
   business: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Business'
+    ref: 'business'
   },
   collect_name: {
     type: String,

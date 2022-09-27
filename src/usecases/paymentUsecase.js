@@ -1,4 +1,5 @@
 const Payment = require('../models/paymentModel')
+const user = require('../usecases/userUsecase')
 
 function getAllPaymentMethods() {
   return Payment.find()
@@ -8,8 +9,14 @@ function getPaymentMethodByUserId(id) {
   return Payment.find({ user: id })
 }
 
-function createPaymentMethod(data) {
+async function createPaymentMethod(data) {
   const newPaymentMethod = new Payment(data)
+
+  const userFound = await user.getByIdUser(data.user)
+  console.log()
+  userFound.payment = newPaymentMethod._id
+  await user.updateUserById(data.user, {payment: userFound.payment}, {new:true})
+  
   return newPaymentMethod.save()
 }
 

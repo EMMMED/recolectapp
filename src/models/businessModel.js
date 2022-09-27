@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-User = require('../models/userModel')
-Collect = require('../models/collectModel')
+user = require('../models/userModel')
+collect = require('../models/collectModel')
 
 const businessSchema = new mongoose.Schema({
 
@@ -28,11 +28,11 @@ const businessSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'user'
   },
   collect: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Collect'
+    ref: 'collect'
   }]
 })
 

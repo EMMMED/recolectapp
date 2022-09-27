@@ -59,7 +59,7 @@ router.get("/", async (request, response) => {
 //   }
 // })
 
-router.get("/:id", async (request, response) => {
+router.get("/:id",authMiddleware, async (request, response) => {
   try {
     const getUserById = await user.getByIdUser(request.params.id)
     response.jsonp({

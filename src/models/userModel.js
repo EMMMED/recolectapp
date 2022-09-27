@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-Business = require('../models/businessModel')
-Payment = require('../models/paymentModel')
-WalletUser = require('../models/walletUserModel')
+business = require('../models/businessModel')
+payment = require('../models/paymentModel')
+walletUser = require('../models/walletUserModel')
 
 const userSchema = new mongoose.Schema({
   user_name: {
@@ -37,15 +37,15 @@ const userSchema = new mongoose.Schema({
   },
   business: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Business'
+    ref: 'business'
   }],
   payment: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Payment'
+    ref: 'payment'
   },
   walletUser: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'WalletUser'
+    ref: 'walletUser'
   }
 })
 

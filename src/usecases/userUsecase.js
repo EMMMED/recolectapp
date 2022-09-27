@@ -25,19 +25,16 @@ async function createUser(data) {
   const userFound = await User.findOne({
     user_mail: data.user_mail,
   })
-  if (userFound) {
-    throw new createError(432, "Usuario no existente");
-  }
-  const newUser = new User(data);
-
+  if (userFound) throw new createError(432, "Usuario no existente")
+  const newUser = new User(data)
+  
   await bcrypt.hash(newUser.user_password, saltRounds, function (err, hash) {
-    newUser.user_password = hash;
-    return newUser.save();
+    newUser.user_password = hash
+    return newUser.save()
   })
-
+  
   const newWallet = await wallet.createWalletUser(newUser._id);
-  await User.findByIdAndUpdate(newUser._id, { walletUser: newWallet._id });
-
+  await User.findByIdAndUpdate(newUser._id, {walletUser: newWallet._id}, {new: true})
 }
 
 function getAllUser() {
@@ -45,18 +42,14 @@ function getAllUser() {
 }
 
 function getByIdUser(id) {
-  const userFound = User.findById(id);
-  if (!userFound) {
-    throw new createError(404, "Usuario no existente");
-  }
+  const userFound = User.findById(id)
+  if (!userFound) throw new createError(404, "Usuario no existente")
   return userFound;
 }
 
 function deleteUserById(id) {
   const user = User.findById(id)
-  if (!user) {
-    throw new createError(404, 'Usuario no existente')
-  }
+  if (!user) throw new createError(404, 'Usuario no existente')
   return User.findByIdAndDelete(id);
 }
 

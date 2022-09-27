@@ -31,8 +31,6 @@ function getBusinessByBusinessId(id) {
 }
 
 async function getBusinessByClientId(id) {
-  const userFound = await user.getByIdUser(id)
-  sumaTotalwaste(userFound.business)
   return Business.find({ user: id })
 }
 
@@ -42,15 +40,15 @@ function updateBusiness(id, data) {
 
 async function deleteBusiness(id) {
   const bussines = await getBusinessByBusinessId(id)
-  const userFound = await user.getByIdUser(bussines.user)
 
+  if(!bussines) throw new createError(404,'Negocio no existe')
+  const userFound = await user.getByIdUser(bussines.user)
   if (bussines.collect.length > 0) throw new createError(400)
 
   const newList = userFound.business.filter((item) => item != id)
   await user.updateUserById(bussines.user, { business: newList })
-  const deleteBussines = Business.findByIdAndDelete(id)
+  return Business.findByIdAndDelete(id)
 
-  return deleteBussines
 }
 
 

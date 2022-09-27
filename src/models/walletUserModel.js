@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-User = require('../models/userModel')
+user = require('../models/userModel')
 
 const walletUserSchema = new mongoose.Schema({
   plastic_wallet: {
@@ -34,7 +34,7 @@ const walletUserSchema = new mongoose.Schema({
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'user'
   }
 })
 
